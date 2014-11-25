@@ -32,7 +32,13 @@
       (if (and (.exists (io/file local-file)) (not overwrite))
         (log/warn "File" local-file "already exists, cannot overwrite.")
         ;; else
-        (do (with-open [output (io/output-stream local-file)]
+        (do
+          ;; ensure directory exists
+          (let [dirs (.getParentFile (io/file local-file))]
+            (when-not (.exists dirs)
+              (.mkdirs dirs)))
+          ;; download blob
+          (with-open [output (io/output-stream local-file)]
               (.download block-blob output))
             (log/info "Downloaded blob[" blob-name "] as " local-file)
             (io/file local-file)))
