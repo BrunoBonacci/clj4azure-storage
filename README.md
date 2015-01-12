@@ -1,8 +1,8 @@
-# clj4azure
+# clj4azure-storage
 
-`clj4azure` is a Clojure wrapper for the Azure SDK.
+`clj4azure-storage` is a Clojure wrapper for the Azure Storage SDK.
 
-`clj4azure` repo available at: [https://github.com/BrunoBonacci/clj4azure](https://github.com/BrunoBonacci/clj4azure)
+`clj4azure-storage` repo available at: [https://github.com/BrunoBonacci/clj4azure-storage](https://github.com/BrunoBonacci/clj4azure-storage)
 
 Authors:
 
@@ -21,7 +21,7 @@ This is still a work in progress, currently we support the following services/fe
 
 To use the library, add the following dependency to your `project.clj`
 
-    [clj4azure/clj4azure "0.1.0"]
+    [clj4azure/clj4azure-storage "0.1.0"]
 
 and then in your namespace add:
 

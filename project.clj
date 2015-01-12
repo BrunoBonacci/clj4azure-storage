@@ -1,6 +1,6 @@
-(defproject clj4azure "0.1.0-SNAPSHOT"
-  :description "Clojure wrapper for Azure SDK"
-  :url "http://example.com/FIXME"
+(defproject clj4azure/clj4azure-storage "0.1.0-SNAPSHOT"
+  :description "Clojure wrapper for Azure Storage SDK"
+  :url "https://github.com/BrunoBonacci/clj4azure-storage"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.6.0"]
