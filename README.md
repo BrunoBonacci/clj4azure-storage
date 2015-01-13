@@ -16,8 +16,10 @@ This is still a work in progress, currently we support the following services/fe
 
   * Azure Storage
     * Blobs
+      * Create container
       * list blobs in a container
       * download blobs from a container
+      * upload blobs(files) into containers
 
 To use the library, add the following dependency to your `project.clj`
 
