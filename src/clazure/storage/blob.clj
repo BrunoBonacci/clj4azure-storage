@@ -6,17 +6,19 @@
             CloudBlobContainer ListBlobItem BlobListingDetails
             CloudBlob BlobProperties LeaseDuration LeaseState
             LeaseStatus CopyState CloudBlobDirectory]
-           [java.io File]))
+           [java.io File FileInputStream]))
 
 
 (defn blob-container
-  [{:keys [storage-account-name storage-account-key storage-container endpoint-protocol]
-    :or {endpoint-protocol "https"}}]
+  [{:keys [storage-account-name storage-account-key storage-container endpoint-protocol create-if-needed]
+    :or {endpoint-protocol "https" create-if-needed false}}]
 
   (let [connection-string (str "DefaultEndpointsProtocol=" endpoint-protocol ";AccountName=" storage-account-name ";AccountKey=" storage-account-key)
         storage-account (CloudStorageAccount/parse connection-string)
         blob-client (.createCloudBlobClient storage-account)
         blob-container (.getContainerReference blob-client storage-container)]
+    (when create-if-needed
+      (.createIfNotExists blob-container))
     (if (.exists blob-container)
       blob-container
       (log/error "The BlobContainer [" blob-container "] doesn't exist"))))
@@ -44,6 +46,16 @@
             (io/file local-file)))
       (log/error "The Blob [" blob-name "] does NOT exist in azure storage"))))
 
+(defn upload-blob
+  "Takes the BlobContainer, blobName and fullname of the file to upload"
+  [^CloudBlobContainer blob-container blob-name local-file]
+  (let [f (io/file local-file)]
+    (if (.exists f)
+      (let [blob (.getBlockBlobReference blob-container blob-name)]
+        (log/info "Uploading " local-file " to storage container as " blob-name)
+        (.upload blob (FileInputStream. f) (.length f))
+        (log/info "Finished uploading " blob-name))
+      (log/warn "Unable to find file " local-file))))
 
 (defn download-blob-to-temp
   "Takes the BlobContainer, blobName and directory to download to.
