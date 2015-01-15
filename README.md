@@ -38,7 +38,7 @@ and then in your namespace add:
 ### Storage / blobs
 
 
-Connect to a container:
+Connect to a container (either existing or create one if needed):
 
 ```Clojure
 
@@ -46,6 +46,12 @@ Connect to a container:
           {:storage-account-name "my-account"
            :storage-account-key  "my-account-key"
            :storage-container    "my-container"}))
+           
+(def new-cnt (blob-container 
+              {:storage-account-name "my-account"
+               :storage-account-key  "my-account-key"
+               :storage-container    "new-container"
+               :create-if-needed true}))
 
 ```
 
@@ -156,6 +162,18 @@ If you don't mind about the local filename you can just download to a temporary 
   :file-prefix "XXXX"              ;; generate temp files with the following prefix (default "blob-") 
   :file-suffix "YYYY")             ;; generate temp files with the following suffiz (default ".data")
 
+
+```
+
+You can upload a file into blob storage using the following function which takes
+
+  - a container
+  - a blob name
+  - a local filename to upload
+  
+```Clojure
+
+(upload-blob cnt "Flats.csv" "/tmp/flats.csv")
 
 ```
 

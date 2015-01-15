@@ -49,7 +49,7 @@
 (defn upload-blob
   "Takes the BlobContainer, blobName and fullname of the file to upload"
   [^CloudBlobContainer blob-container blob-name local-file]
-  (let [f (File. local-file)]
+  (let [f (io/file local-file)]
     (if (.exists f)
       (let [blob (.getBlockBlobReference blob-container blob-name)]
         (log/info "Uploading " local-file " to storage container as " blob-name)
