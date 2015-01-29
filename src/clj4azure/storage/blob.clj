@@ -46,16 +46,21 @@
             (io/file local-file)))
       (log/error "The Blob [" blob-name "] does NOT exist in azure storage"))))
 
+
 (defn upload-blob
   "Takes the BlobContainer, blobName and fullname of the file to upload"
   [^CloudBlobContainer blob-container blob-name local-file]
   (let [f (io/file local-file)]
     (if (.exists f)
-      (let [blob (.getBlockBlobReference blob-container blob-name)]
-        (log/info "Uploading " local-file " to storage container as " blob-name)
-        (.upload blob (FileInputStream. f) (.length f))
-        (log/info "Finished uploading " blob-name))
-      (log/warn "Unable to find file " local-file))))
+      (let [blob   (.getBlockBlobReference blob-container blob-name)
+            _      (log/info "Uploading " local-file " to storage container as " blob-name)
+            _      (.upload blob (FileInputStream. f) (.length f))
+            _      (log/info "Finished uploading " blob-name)]
+        :ok)
+      (do
+        (log/warn "Unable to find file " local-file)
+        :file-not-found))))
+
 
 (defn download-blob-to-temp
   "Takes the BlobContainer, blobName and directory to download to.
