@@ -1,4 +1,5 @@
 (ns clj4azure.storage.blob
+  (:refer-clojure :exclude [list])
   (:require [clojure.tools.logging :as log])
   (:require [clojure.java.io :as io])
   (:import [com.microsoft.azure.storage CloudStorageAccount]
