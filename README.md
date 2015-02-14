@@ -74,6 +74,7 @@ List all blobs which starts with a common prefix
 ```
 
 List the content of the sub-directories
+*NOTE: `list` is NOT lazy, so if you have large number of files might cause OutOfMemoryError.*
 
 ```Clojure
 
